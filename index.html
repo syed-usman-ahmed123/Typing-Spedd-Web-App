@@ -15,12 +15,12 @@
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
     .attribution {
-      font-size: 0.6875rem;
+      /* font-size: 0.6875rem; */
       text-align: center;
     }
 
     .attribution a {
-      color: hsl(228, 45%, 44%);
+      /* color: hsl(228, 45%, 44%); */
     }
   </style>
 </head>
@@ -115,7 +115,8 @@
   <main class="max-w-6xl mx-auto px-6 py-16 relative min-h-[400px]">
 
     <!-- Typing Text Area -->
-    <div id="text-display" class="text-2xl leading-relaxed text-[var(--neutral-400)] select-none max-w-4xl mx-auto">
+    <div id="text-display"
+      class="text-2xl leading-relaxed text-[var(--neutral-400)] select-none max-w-4xl mx-auto blurred">
       <!-- Text will be inserted here by JavaScript -->
     </div>
 
@@ -138,15 +139,66 @@
   </div>
 
   <!-- ========== RESULTS SCREEN ========== -->
-  <div id="results-screen"
-    class="hidden fixed inset-0 bg-[var(--neutral-900)] flex flex-col items-center justify-center z-50 px-6">
-    <!-- Results content baad mein aayega -->
+  <div id="results-screen" class="hidden fixed inset-0 bg-[var(--neutral-900)] flex flex-col z-50 overflow-y-auto">
+
+    <!-- Header inside Results Screen -->
+    <header class="border-b border-[var(--neutral-800)] w-full">
+      <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <img src="./assets/images/logo-large.svg" alt="Typing Speed Test" class="hidden lg:block h-10">
+          <div class="flex items-center gap-3 lg:hidden">
+            <img src="./assets/images/logo-small.svg" alt="Typing Speed Test" class="h-8">
+            <div>
+              <h1 class="text-lg font-semibold leading-tight">Typing Speed Test</h1>
+              <p class="text-sm text-[var(--neutral-400)]">Type as fast as you can in 60 seconds</p>
+            </div>
+          </div>
+        </div>
+        <div class="flex items-center gap-2 text-sm">
+          <img src="./assets/images/icon-personal-best.svg" alt="Trophy" class="w-5 h-5">
+          <span class="text-[var(--neutral-400)] hidden sm:inline">Personal best:</span>
+          <span class="font-semibold" id="result-header-pb">0 WPM</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Modal Content (Centered) -->
+    <div class="flex-1 flex flex-col items-center justify-center px-6 py-12">
+      <div id="result-icon" class="mb-6"></div>
+      <h2 id="result-title" class="text-3xl font-bold mb-2">Test Complete!</h2>
+      <p id="result-subtitle" class="text-[var(--neutral-400)] text-sm mb-8">Solid run. Keep pushing to beat your high
+        score.</p>
+
+      <!-- Stats Grid Box -->
+      <div class="flex gap-4 mb-8">
+        <div class="border border-[var(--neutral-800)] rounded-xl p-4 w-32 text-center bg-[var(--neutral-900)]">
+          <p class="text-xs text-[var(--neutral-400)] mb-1">WPM:</p>
+          <p id="final-wpm" class="text-2xl font-bold">0</p>
+        </div>
+        <div class="border border-[var(--neutral-800)] rounded-xl p-4 w-32 text-center bg-[var(--neutral-900)]">
+          <p class="text-xs text-[var(--neutral-400)] mb-1">Accuracy:</p>
+          <p id="final-accuracy" class="text-2xl font-bold">0%</p>
+        </div>
+        <div class="border border-[var(--neutral-800)] rounded-xl p-4 w-32 text-center bg-[var(--neutral-900)]">
+          <p class="text-xs text-[var(--neutral-400)] mb-1">Characters:</p>
+          <p id="final-chars" class="text-2xl font-bold">0/0</p>
+        </div>
+      </div>
+
+      <!-- Go Again Button -->
+      <button id="go-again-btn"
+        class="px-6 py-3 bg-[var(--neutral-0)] hover:bg-[var(--neutral-400)] text-[var(--neutral-900)] font-semibold rounded-xl transition flex items-center gap-2">
+        Go Again ↺
+      </button>
+    </div>
   </div>
 
-  <footer class="attribution py-6 text-center text-[var(--neutral-500)]">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" class="text-[var(--blue-400)]">Frontend
+  <footer class="attribution border-t border-[var(--neutral-800)] text-sm  py-6 text-center text-[var(--neutral-500)]">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" rel="noreferrer" target="_blank"
+      class="text-[var(--blue-400)] hover:text-[var(--green-500)]">Frontend
       Mentor</a>.
-    Coded by <a href="https://syedusmanahmed.vercel.app/" class="text-[var(--blue-400)]">Syed Usman Ahmed</a>.
+    Coded by <a href="https://syedusmanahmed.vercel.app/" target="_blank" rel="noreferrer"
+      class="text-[var(--blue-400)] hover:text-[var(--green-500)]">Syed Usman Ahmed</a>.
   </footer>
 
   <script src="script.js"></script>
