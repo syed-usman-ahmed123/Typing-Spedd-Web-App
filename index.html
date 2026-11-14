@@ -28,29 +28,40 @@
 <body class="bg-[var(--neutral-900)] text-[var(--neutral-0)] font-[family-name:var(--font-family)] min-h-screen">
 
   <!-- ========== HEADER ========== -->
-  <header class="flex items-center justify-between px-6 py-5 max-w-6xl mx-auto">
-    <!-- Logo + Title -->
-    <div class="flex items-center gap-3">
-      <div class="w-8 h-8 rounded-lg bg-[var(--blue-600)] flex items-center justify-center">
-        <img src="./assets/images/logo-large.svg" alt="Typing Speed Test Logo">
-      </div>
-      <div>
-        <h1 class="text-lg font-semibold">Typing Speed Test</h1>
-        <p class="text-sm text-[var(--neutral-400)]">Type as fast as you can in 60 seconds</p>
-      </div>
-    </div>
+  <header class="border-b border-[var(--neutral-800)]">
+    <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
 
-    <!-- Personal Best -->
-    <div class="flex items-center gap-2 text-sm">
-      <img src="./assets/images/icon-personal-best.svg" alt="Trophy Icon" class="w-5 h-5">
-      <span class="text-[var(--neutral-400)]">Personal best:</span>
-      <span class="font-semibold" id="personal-best">0 WPM</span>
+
+      <!-- Logo + Title -->
+      <div class="flex items-center gap-3">
+
+        <!-- Desktop Logo  -->
+        <img src="./assets/images/logo-large.svg" alt="Typing Speed Test" class="hidden lg:block h-10">
+
+        <!-- Mobile Logo  -->
+        <div class="flex items-center gap-3 lg:hidden">
+          <img src="./assets/images/logo-small.svg" alt="Typing Speed Test" class="h-8">
+
+          <div>
+            <h1 class="text-lg font-semibold leading-tight">Typing Speed Test</h1>
+            <p class="text-sm text-[var(--neutral-400)]">Type as fast as you can in 60 seconds</p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Personal Best -->
+      <div class="flex items-center gap-2 text-sm">
+        <img src="./assets/images/icon-personal-best.svg" alt="Trophy" class="w-5 h-5">
+        <span class="text-[var(--neutral-400)] hidden sm:inline">Personal best:</span>
+        <span class="font-semibold" id="personal-best">0 WPM</span>
+      </div>
     </div>
   </header>
 
   <!-- ========== STATS BAR ========== -->
-  <div class="border-y border-[var(--neutral-800)] px-6 py-4">
-    <div class="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
+  <div class="border-b border-[var(--neutral-800)]">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center justify-between gap-4">
 
       <!-- Left Stats -->
       <div class="flex items-center gap-6 text-sm">
@@ -60,11 +71,11 @@
         </div>
         <div>
           <span class="text-[var(--neutral-400)]">Accuracy: </span>
-          <span class="font-semibold" id="accuracy">100%</span>
+          <span class="font-semibold text-[var(--red-500)]" id="accuracy">100%</span>
         </div>
         <div>
           <span class="text-[var(--neutral-400)]">Time: </span>
-          <span class="font-semibold" id="timer">0:60</span>
+          <span class="font-semibold text-[var(--yellow-400)]" id="timer">0:60</span>
         </div>
       </div>
 
@@ -75,12 +86,12 @@
           <span class="text-[var(--neutral-400)]">Difficulty:</span>
           <div class="flex gap-1">
             <button
-              class="px-3 py-1 rounded-full border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)]"
+              class="px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] transition"
               data-difficulty="easy">Easy</button>
-            <button class="px-3 py-1 rounded-full border border-[var(--blue-400)] text-[var(--blue-400)]"
+            <button class="px-3 py-1 rounded-lg border border-[var(--blue-400)] text-[var(--blue-400)] transition"
               data-difficulty="medium">Medium</button>
             <button
-              class="px-3 py-1 rounded-full border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)]"
+              class="px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] transition"
               data-difficulty="hard">Hard</button>
           </div>
         </div>
@@ -89,10 +100,10 @@
         <div class="flex items-center gap-2">
           <span class="text-[var(--neutral-400)]">Mode:</span>
           <div class="flex gap-1">
-            <button class="px-3 py-1 rounded-full border border-[var(--blue-400)] text-[var(--blue-400)]"
+            <button class="px-3 py-1 rounded-lg border border-[var(--blue-400)] text-[var(--blue-400)] transition"
               data-mode="timed">Timed (60s)</button>
             <button
-              class="px-3 py-1 rounded-full border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)]"
+              class="px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] transition"
               data-mode="passage">Passage</button>
           </div>
         </div>
@@ -101,74 +112,44 @@
   </div>
 
   <!-- ========== MAIN CONTENT ========== -->
-  <main class="max-w-4xl mx-auto px-6 py-16 relative">
+  <main class="max-w-6xl mx-auto px-6 py-16 relative min-h-[400px]">
 
     <!-- Typing Text Area -->
-    <div id="text-display" class="text-2xl leading-relaxed text-[var(--neutral-400)] select-none">
-      
+    <div id="text-display" class="text-2xl leading-relaxed text-[var(--neutral-400)] select-none max-w-4xl mx-auto">
+      <!-- Text will be inserted here by JavaScript -->
     </div>
 
     <!-- Start Overlay -->
-    <div id="start-overlay"
-      class="absolute inset-0 flex flex-col items-center justify-center bg-[var(--neutral-900)]/80">
+    <div id="start-overlay" class="absolute inset-0 flex flex-col items-center justify-center">
       <button id="start-btn"
         class="px-8 py-3 bg-[var(--blue-600)] hover:bg-[var(--blue-400)] text-white font-semibold rounded-xl transition">
         Start Typing Test
       </button>
       <p class="mt-4 text-[var(--neutral-400)] text-sm">Or click the text and start typing</p>
     </div>
-
   </main>
 
-  <!-- ========== RESTART BUTTON (hidden by default) ========== -->
-  <div class="text-center pb-10">
+  <!-- ========== RESTART BUTTON ========== -->
+  <div class="max-w-6xl mx-auto px-6 text-center pb-10">
     <button id="restart-btn"
       class="hidden px-6 py-2.5 bg-[var(--neutral-800)] hover:bg-[var(--neutral-500)] rounded-xl text-sm transition">
       Restart Test ↺
     </button>
   </div>
 
-  <!-- ========== RESULTS SCREEN (hidden by default) ========== -->
+  <!-- ========== RESULTS SCREEN ========== -->
   <div id="results-screen"
-    class="hidden fixed inset-0 bg-[var(--neutral-900)] flex flex-col items-center justify-center z-50">
-    <!-- Results content yahan aayega -->
+    class="hidden fixed inset-0 bg-[var(--neutral-900)] flex flex-col items-center justify-center z-50 px-6">
+    <!-- Results content baad mein aayega -->
   </div>
 
-  <!-- Personal best:  WPM
-
-  WPM: 
-  Accuracy: 
-  Time: 
-
-  Difficulty:
-  Easy
-  Medium
-  Hard
-
-  Mode:
-  Timed (60s)
-  Passage
-
-  
-
-  Start Typing Test
-  Or click the text and start typing
-
- 
-
-  Test Complete!
-  Solid run. Keep pushing to beat your high score.
-
-  WPM: 
-  Accuracy: 
-  Characters: 
-
-  Go Again -->
-
-  <footer class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
-    Coded by <a href="https://syedusmanahmed.vercel.app/">Syed Usman Ahmed</a>.
+  <footer class="attribution py-6 text-center text-[var(--neutral-500)]">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" class="text-[var(--blue-400)]">Frontend
+      Mentor</a>.
+    Coded by <a href="https://syedusmanahmed.vercel.app/" class="text-[var(--blue-400)]">Syed Usman Ahmed</a>.
   </footer>
+
+  <script src="script.js"></script>
 </body>
 
 </html>

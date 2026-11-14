@@ -27,3 +27,38 @@
   --font-family: 'Sora', sans-serif;
   --font-size-base: 16px;
 }
+
+/* ===== Base Styles ===== */
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  background-color: var(--neutral-900);
+  color: var(--neutral-0);
+}
+
+/* ===== Typing Text Character Styles ===== */
+.char {
+  transition: color 0.1s ease;
+}
+
+.char.correct {
+  color: var(--green-500);
+}
+
+.char.incorrect {
+  color: var(--red-500);
+  text-decoration: underline;
+  text-decoration-color: var(--red-500);
+}
+
+.char.current {
+  background-color: var(--neutral-500);
+  border-radius: 2px;
+}
+
+/* ===== Blur effect for text when not started ===== */
+.blurred {
+  filter: blur(5px);
+  user-select: none;
+  pointer-events: none;
+}
