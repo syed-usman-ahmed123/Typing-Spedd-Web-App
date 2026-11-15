@@ -139,7 +139,8 @@
   </div>
 
   <!-- ========== RESULTS SCREEN ========== -->
-  <div id="results-screen" class="hidden fixed inset-0 bg-[var(--neutral-900)] flex flex-col z-50 overflow-y-auto">
+  <div id="results-screen"
+    class="hidden absolute top-0 inset-x-0 min-h-screen bg-[var(--neutral-900)] flex flex-col z-50 overflow-x-hidden">
 
     <!-- Header inside Results Screen -->
     <header class="border-b border-[var(--neutral-800)] w-full">
@@ -154,40 +155,60 @@
             </div>
           </div>
         </div>
+
         <div class="flex items-center gap-2 text-sm">
           <img src="./assets/images/icon-personal-best.svg" alt="Trophy" class="w-5 h-5">
           <span class="text-[var(--neutral-400)] hidden sm:inline">Personal best:</span>
+
           <span class="font-semibold" id="result-header-pb">0 WPM</span>
         </div>
       </div>
     </header>
 
-    <!-- Modal Content (Centered) -->
-    <div class="flex-1 flex flex-col items-center justify-center px-6 py-12">
-      <div id="result-icon" class="mb-6"></div>
-      <h2 id="result-title" class="text-3xl font-bold mb-2">Test Complete!</h2>
-      <p id="result-subtitle" class="text-[var(--neutral-400)] text-sm mb-8">Solid run. Keep pushing to beat your high
-        score.</p>
 
-      <!-- Stats Grid Box -->
-      <div class="flex gap-4 mb-8">
-        <div class="border border-[var(--neutral-800)] rounded-xl p-4 w-32 text-center bg-[var(--neutral-900)]">
-          <p class="text-xs text-[var(--neutral-400)] mb-1">WPM:</p>
-          <p id="final-wpm" class="text-2xl font-bold">0</p>
-        </div>
-        <div class="border border-[var(--neutral-800)] rounded-xl p-4 w-32 text-center bg-[var(--neutral-900)]">
-          <p class="text-xs text-[var(--neutral-400)] mb-1">Accuracy:</p>
-          <p id="final-accuracy" class="text-2xl font-bold">0%</p>
-        </div>
-        <div class="border border-[var(--neutral-800)] rounded-xl p-4 w-32 text-center bg-[var(--neutral-900)]">
-          <p class="text-xs text-[var(--neutral-400)] mb-1">Characters:</p>
-          <p id="final-chars" class="text-2xl font-bold">0/0</p>
+    <!-- Modal Content (Centered) -->
+    <div class="relative flex-1 flex flex-col items-center justify-center px-6 pt-12 pb-40 md:pb-56 min-h-[700px]">
+
+      <!-- Decorative Stars (First Test & Normal Test Complete ke liye) -->
+      <img id="pattern-star-left" src="./assets/images/pattern-star-2.svg" alt=""
+        class="hidden md:block absolute top-24 left-12 w-6 h-6 pointer-events-none">
+      <img id="pattern-star-right" src="./assets/images/pattern-star-1.svg" alt=""
+        class="hidden md:block absolute bottom-20 right-16 w-10 h-10 pointer-events-none">
+
+      <!-- Decorative Confetti (High Score Smashed ke liye) -->
+      <img id="pattern-confetti" src="./assets/images/pattern-confetti.svg" alt=""
+        class="hidden absolute bottom-0 inset-x-0 w-full h-40 md:h-56 object-cover object-bottom pointer-events-none">
+      <!-- Top Center Icon (Completed ya New PB) -->
+      <div id="result-icon" class="mb-6 z-10"></div>
+
+      <!-- Heading & Subtitle -->
+      <h2 id="result-title" class="text-3xl font-bold mb-2 z-10 text-center">Test Complete!</h2>
+      <p id="result-subtitle" class="text-[var(--neutral-400)] text-sm mb-8 z-10 text-center max-w-md">Solid run. Keep
+        pushing to beat your high score.</p>
+
+      <!-- Stats Grid Box (Purana code same rahega) -->
+      <div class="flex flex-wrap justify-center gap-4 mb-8 z-10">
+        <div class="flex flex-wrap justify-center gap-4 mb-8 z-10">
+          <div class="border border-[var(--neutral-800)] rounded-xl px-8 py-4 min-w-[160px]">
+            <p class="text-sm text-[var(--neutral-400)] mb-1">WPM:</p>
+            <p id="final-wpm" class="text-2xl font-bold">0</p>
+          </div>
+
+          <div class="border border-[var(--neutral-800)] rounded-xl px-8 py-4 min-w-[160px]">
+            <p class="text-sm text-[var(--neutral-400)] mb-1">Accuracy:</p>
+            <p id="final-accuracy" class="text-2xl font-bold">100%</p>
+          </div>
+
+          <div class="border border-[var(--neutral-800)] rounded-xl px-8 py-4 min-w-[160px]">
+            <p class="text-sm text-[var(--neutral-400)] mb-1">Characters:</p>
+            <p id="final-chars" class="text-2xl font-bold">0/0</p>
+          </div>
         </div>
       </div>
 
-      <!-- Go Again Button -->
+      <!-- Button (Purana code same rahega) -->
       <button id="go-again-btn"
-        class="px-6 py-3 bg-[var(--neutral-0)] hover:bg-[var(--neutral-400)] text-[var(--neutral-900)] font-semibold rounded-xl transition flex items-center gap-2">
+        class="z-10 px-6 py-3 bg-[var(--neutral-0)] hover:bg-[var(--neutral-400)] text-[var(--neutral-900)] font-semibold rounded-xl transition flex items-center gap-2">
         Go Again ↺
       </button>
     </div>
