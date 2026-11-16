@@ -114,7 +114,27 @@ document.addEventListener('keydown', (e) => {
     }
 
     // Backspace handle karne ke liye (optional abhi ke liye, pehle normal typing dekhte hain)
-    if (e.key === 'Backspace') return;
+    if (e.key === 'Backspace') {
+        if (currentIndex > 0) {
+            const spanElements = textDisplay.querySelectorAll('.char');
+
+            // Current cursor ko piche hatayein
+            spanElements[currentIndex].classList.remove('current');
+            currentIndex--;
+
+            // Agar pichla character ghalat (incorrect) tha, to error count kam karein
+            if (spanElements[currentIndex].classList.contains('incorrect')) {
+                errors--;
+            }
+
+            // Character ka purana color (correct/incorrect) hata kar wapas current banayein
+            spanElements[currentIndex].classList.remove('correct', 'incorrect');
+            spanElements[currentIndex].classList.add('current');
+
+            updateStats();
+        }
+        return;
+    }
 
 
     // Sirf single characters ko handle karein (jaise letters, spaces, punctuation)
@@ -287,7 +307,36 @@ startBtn.addEventListener('click', () => {
     startTest();
 });
 
+// Poora overlay (button + "Or click the text..." + background) clickable bana dein:
+startOverlay.addEventListener('click', () => {
+    if (!isTestRunning) {
+        startTest();
+    }
+});
+
+
 // Page load hote hi ek random text load karwao aur blur rakho
 currentText = getRandomText(currentDifficulty);
 renderText(currentText);
 textDisplay.classList.add("blurred");
+
+
+const difficultyBtns = document.querySelectorAll('.difficulty-btn');
+
+difficultyBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // 1. Sab buttons se active blue style hatayein aur original neutral style wapas lagayein
+        difficultyBtns.forEach(b => {
+            b.classList.remove('border-[var(--blue-500)]', 'text-[var(--blue-400)]');
+            b.classList.add('border-[var(--neutral-500)]', 'text-[var(--neutral-400)]');
+        });
+
+        // 2. Sirf clicked button se neutral hatayein aur active blue style lagayein
+        btn.classList.remove('border-[var(--neutral-500)]', 'text-[var(--neutral-400)]');
+        btn.classList.add('border-[var(--blue-500)]', 'text-[var(--blue-400)]');
+
+        // 3. Difficulty update karein aur test reset karein
+        currentDifficulty = btn.getAttribute('data-difficulty');
+        resetTest();
+    });
+});

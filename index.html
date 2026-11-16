@@ -86,12 +86,13 @@
           <span class="text-[var(--neutral-400)]">Difficulty:</span>
           <div class="flex gap-1">
             <button
-              class="px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] transition"
+              class="cursor-pointer difficulty-btn px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] transition"
               data-difficulty="easy">Easy</button>
-            <button class="px-3 py-1 rounded-lg border border-[var(--blue-400)] text-[var(--blue-400)] transition"
+            <button
+              class="cursor-pointer difficulty-btn px-3 py-1 rounded-lg border border-[var(--blue-500)] text-[var(--blue-400)] hover:border-[var(--blue-400)] transition"
               data-difficulty="medium">Medium</button>
             <button
-              class="px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] transition"
+              class="cursor-pointer difficulty-btn px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] transition"
               data-difficulty="hard">Hard</button>
           </div>
         </div>
@@ -123,17 +124,18 @@
     <!-- Start Overlay -->
     <div id="start-overlay" class="absolute inset-0 flex flex-col items-center justify-center">
       <button id="start-btn"
-        class="px-8 py-3 bg-[var(--blue-600)] hover:bg-[var(--blue-400)] text-white font-semibold rounded-xl transition">
+        class="px-8 py-3 bg-[var(--blue-600)] hover:bg-[var(--blue-400)] text-white font-semibold rounded-xl transition cursor-pointer">
         Start Typing Test
       </button>
-      <p class="mt-4 text-[var(--neutral-400)] text-sm">Or click the text and start typing</p>
+      <p id="click-to-start"
+        class="  mt-4 text-[var(--neutral-400)] text-sm">Or click the text and start typing</p>
     </div>
   </main>
 
   <!-- ========== RESTART BUTTON ========== -->
   <div class="max-w-6xl mx-auto px-6 text-center pb-10">
     <button id="restart-btn"
-      class="hidden px-6 py-2.5 bg-[var(--neutral-800)] hover:bg-[var(--neutral-500)] rounded-xl text-sm transition">
+      class=" cursor-pointer hidden px-6 py-2.5 bg-[var(--neutral-800)] hover:bg-[var(--neutral-500)] rounded-xl text-sm transition">
       Restart Test ↺
     </button>
   </div>
@@ -213,6 +215,8 @@
       </button>
     </div>
   </div>
+
+
 
   <footer class="attribution border-t border-[var(--neutral-800)] text-sm  py-6 text-center text-[var(--neutral-500)]">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" rel="noreferrer" target="_blank"
