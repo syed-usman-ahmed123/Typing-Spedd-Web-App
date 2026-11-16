@@ -22,9 +22,12 @@ const patternStarLeft = document.getElementById('pattern-star-left');
 const patternStarRight = document.getElementById('pattern-star-right');
 const patternConfetti = document.getElementById('pattern-confetti');
 
+const cursor = document.getElementById('cursor');
+
 
 let currentText = "";
 let currentDifficulty = "medium";
+let currentMode = "timed";
 let isTestRunning = false;
 let currentIndex = 0;
 
@@ -32,6 +35,20 @@ let timer = 60;
 let timerInterval = null;
 let totalTyped = 0;
 let errors = 0;
+
+function updateCursorPosition() {
+    const currentChar = textDisplay.querySelector('.char.current');
+    if (currentChar && cursor) {
+        const charRect = currentChar.getBoundingClientRect();
+        const parentRect = cursor.parentElement.getBoundingClientRect();
+
+        const left = charRect.left - parentRect.left;
+        const top = charRect.top - parentRect.top;
+
+        cursor.style.height = `${charRect.height}px`;
+        cursor.style.transform = `translate(${left}px, ${top}px)`;
+    }
+}
 
 // Function ya initialization mein jahan personal best set hota hai:
 const currentBest = `${localStorage.getItem('typingPersonalBest') || 0} WPM`;
@@ -81,6 +98,7 @@ function renderText(text) {
 
         textDisplay.appendChild(span);
     });
+    updateCursorPosition();
 }
 
 function startTest() {
@@ -96,13 +114,24 @@ function startTest() {
 
     isTestRunning = true;
     currentIndex = 0;
+    updateCursorPosition();
 }
 
+let typingTimeout; // keydown listener ke bahar (upar) likhein
 
 // Keyboard input sunne ke liye
 document.addEventListener('keydown', (e) => {
     if (!isTestRunning) return;
 
+    // Sirf typing keys (letters, space, backspace) par blink rokein
+    if (e.key.length === 1 || e.key === 'Backspace') {
+        document.body.classList.remove('idle');
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+            document.body.classList.add('idle');
+          
+        }, 500);
+    }
     // Space se page scroll na ho
     if (e.key === ' ' || e.code === 'Space') {
         e.preventDefault();
@@ -132,6 +161,7 @@ document.addEventListener('keydown', (e) => {
             spanElements[currentIndex].classList.add('current');
 
             updateStats();
+            updateCursorPosition();
         }
         return;
     }
@@ -157,6 +187,7 @@ document.addEventListener('keydown', (e) => {
         if (currentIndex < spanElements.length) {
             spanElements[currentIndex].classList.add('current');
             updateStats(); // Live WPM aur Accuracy update karein
+            updateCursorPosition();
         } else {
             endTest(); // Agar text khatam ho jaye
         }
@@ -166,23 +197,32 @@ document.addEventListener('keydown', (e) => {
 
 function startTimer() {
     timerInterval = setInterval(() => {
-        if (timer > 0) {
-            timer--;
-            timerElement.innerText = `0:${timer < 10 ? '0' : ''}${timer}`;
+        if (currentMode === "timed") {
+            if (timer > 0) {
+                timer--;
+                timerElement.innerText = `0:${timer < 10 ? '0' : ''}${timer}`;
+            } else {
+                endTest();
+            }
         } else {
-            endTest();
+            // Passage Mode: Time upar count hoga (Stopwatch)
+            timer++;
+            const mins = Math.floor(timer / 60);
+            const secs = timer % 60;
+            timerElement.innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
         }
     }, 1000);
 }
 
 function updateStats() {
-    // WPM Formula: (Correct Characters / 5) / Elapsed Minutes
-    const timeElapsed = (60 - timer) / 60;
+    // Timed mein (60 - timer), Passage mein direct 'timer' seconds guzre hain
+    const secondsElapsed = currentMode === "timed" ? (60 - timer) : timer;
+    const timeElapsed = secondsElapsed / 60;
+
     const correctTyped = currentIndex - errors;
     const wpm = timeElapsed > 0 ? Math.round((correctTyped / 5) / timeElapsed) : 0;
     wpmElement.innerText = wpm;
 
-    // Accuracy Formula: ((Total - Errors) / Total) * 100
     const accuracy = totalTyped > 0 ? Math.round(((totalTyped - errors) / totalTyped) * 100) : 100;
     accuracyElement.innerText = `${accuracy}%`;
 }
@@ -280,10 +320,19 @@ goAgainBtn.addEventListener('click', () => {
 
 function resetTest() {
     clearInterval(timerInterval);
+    clearTimeout(typingTimeout); // Purana typing timeout clear karein
     timerInterval = null;
     isTestRunning = false;
 
-    timer = 60;
+    document.body.classList.add('idle'); // Cursor ko wapas blink mode mein layein
+
+    if (currentMode === "timed") {
+        timer = 60;
+        timerElement.innerText = "1:00";
+    } else {
+        timer = 0;
+        timerElement.innerText = "0:00";
+    }
     totalTyped = 0;
     errors = 0;
     currentIndex = 0;
@@ -340,3 +389,27 @@ difficultyBtns.forEach(btn => {
         resetTest();
     });
 });
+
+const modeBtns = document.querySelectorAll('.mode-btn');
+
+modeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // 1. Sab buttons se active blue style hatayein
+        modeBtns.forEach(b => {
+            b.classList.remove('border-[var(--blue-500)]', 'text-[var(--blue-400)]');
+            b.classList.add('border-[var(--neutral-500)]', 'text-[var(--neutral-400)]');
+        });
+
+        // 2. Clicked button ko active blue style dein
+        btn.classList.remove('border-[var(--neutral-500)]', 'text-[var(--neutral-400)]');
+        btn.classList.add('border-[var(--blue-500)]', 'text-[var(--blue-400)]');
+
+        // 3. Mode update karein aur test reset karein
+        currentMode = btn.getAttribute('data-mode');
+        resetTest();
+    });
+});
+
+// Page load hote hi cursor ko blinking state mein rakhein
+document.body.classList.add('idle');
+updateCursorPosition();

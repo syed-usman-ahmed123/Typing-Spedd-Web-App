@@ -37,9 +37,7 @@ body {
 }
 
 /* ===== Typing Text Character Styles ===== */
-.char {
-  transition: color 0.1s ease;
-}
+
 
 .char.correct {
   color: var(--green-500);
@@ -52,8 +50,32 @@ body {
 }
 
 .char.current {
-  background-color: var(--neutral-500);
-  border-radius: 2px;
+  background-color: transparent;
+}
+
+#cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  background-color: #3b82f6;
+  pointer-events: none;
+  transition: transform 0.08s ease-out;
+  z-index: 10;
+}
+
+.idle #cursor {
+  animation: cursorBlink 1s infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Jab text blurred ho to cursor hide rahe */
+#text-display.blurred ~ #cursor {
+  display: none;
 }
 
 /* ===== Blur effect for text when not started ===== */
