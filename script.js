@@ -22,6 +22,17 @@ const patternStarLeft = document.getElementById('pattern-star-left');
 const patternStarRight = document.getElementById('pattern-star-right');
 const patternConfetti = document.getElementById('pattern-confetti');
 
+// Mobile Dropdown Elements
+const mobileDiffBtn = document.getElementById('mobile-difficulty-btn');
+const mobileDiffMenu = document.getElementById('mobile-difficulty-menu');
+const mobileDiffLabel = document.getElementById('mobile-difficulty-label');
+const mobileDiffOptions = document.querySelectorAll('.mobile-diff-option');
+
+const mobileModeBtn = document.getElementById('mobile-mode-btn');
+const mobileModeMenu = document.getElementById('mobile-mode-menu');
+const mobileModeLabel = document.getElementById('mobile-mode-label');
+const mobileModeOptions = document.querySelectorAll('.mobile-mode-option');
+
 const cursor = document.getElementById('cursor');
 
 
@@ -148,7 +159,7 @@ document.addEventListener('keydown', (e) => {
         clearTimeout(typingTimeout);
         typingTimeout = setTimeout(() => {
             document.body.classList.add('idle');
-          
+
         }, 500);
     }
     // Space se page scroll na ho
@@ -308,7 +319,11 @@ function endTest() {
         resultSubtitle.innerText = "Solid run. Keep pushing to beat your high score.";
         goAgainBtn.innerHTML = "Go Again ↺";
 
-        if (resultIcon) resultIcon.innerHTML = `<img src="./assets/images/icon-completed.svg" alt="Completed" class="w-16 h-16">`;
+        if (resultIcon) resultIcon.innerHTML = `<div class="absolute w-20 h-20 bg-green-500/10 rounded-full"></div>
+    <div class="absolute w-16 h-16 bg-green-500/20 rounded-full"></div>
+    <div class="relative w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+        <img src="./assets/images/${iconFileName}" alt="">
+    </div>`;
         if (patternStarLeft) patternStarLeft.style.display = '';
         if (patternStarRight) patternStarRight.style.display = '';
         if (patternConfetti) patternConfetti.classList.add('hidden');
@@ -426,6 +441,73 @@ modeBtns.forEach(btn => {
         // 3. Mode update karein aur test reset karein
         currentMode = btn.getAttribute('data-mode');
         resetTest();
+    });
+});
+
+// Toggle Difficulty Menu
+mobileDiffBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mobileDiffMenu.classList.toggle('hidden');
+    mobileModeMenu.classList.add('hidden');
+});
+
+// Toggle Mode Menu
+mobileModeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mobileModeMenu.classList.toggle('hidden');
+    mobileDiffMenu.classList.add('hidden');
+});
+
+// Bahar click karne par dropdowns band karein
+document.addEventListener('click', () => {
+    mobileDiffMenu.classList.add('hidden');
+    mobileModeMenu.classList.add('hidden');
+});
+
+// Difficulty Option Select
+// Difficulty Option Select ke andar:
+mobileDiffOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        const selectedDiff = option.dataset.difficulty;
+        mobileDiffLabel.innerText = option.innerText.trim();
+
+        // Radio circle UI update
+        mobileDiffOptions.forEach(opt => {
+            const circle = opt.querySelector('.radio-circle');
+            if (opt.dataset.difficulty === selectedDiff) {
+                circle.className = 'radio-circle w-4 h-4 rounded-full border-4 border-[var(--blue-400)] bg-[var(--neutral-800)] flex items-center justify-center';
+            } else {
+                circle.className = 'radio-circle w-4 h-4 rounded-full border-2 border-[var(--neutral-400)] flex items-center justify-center';
+            }
+        });
+
+        const desktopBtn = document.querySelector(`.difficulty-btn[data-difficulty="${selectedDiff}"]`);
+        if (desktopBtn) desktopBtn.click();
+
+        mobileDiffMenu.classList.add('hidden');
+    });
+});
+
+// Mode Option Select ke andar:
+mobileModeOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        const selectedMode = option.dataset.mode;
+        mobileModeLabel.innerText = option.innerText.trim();
+
+        // Radio circle UI update
+        mobileModeOptions.forEach(opt => {
+            const circle = opt.querySelector('.radio-circle');
+            if (opt.dataset.mode === selectedMode) {
+                circle.className = 'radio-circle w-4 h-4 rounded-full border-4 border-[var(--blue-400)] bg-[var(--neutral-800)] flex items-center justify-center';
+            } else {
+                circle.className = 'radio-circle w-4 h-4 rounded-full border-2 border-[var(--neutral-400)] flex items-center justify-center';
+            }
+        });
+
+        const desktopBtn = document.querySelector(`.mode-btn[data-mode="${selectedMode}"]`);
+        if (desktopBtn) desktopBtn.click();
+
+        mobileModeMenu.classList.add('hidden');
     });
 });
 

@@ -29,23 +29,23 @@
 
   <!-- ========== HEADER ========== -->
   <header class=" border-[var(--neutral-800)]">
-    <div class="max-w-6xl mx-auto  py-5 flex items-center justify-between">
+    <div class="max-w-6xl mx-auto  py-5 flex items-center justify-between px-4 xl:px-0">
 
 
       <!-- Logo + Title -->
       <div class="flex items-center gap-3">
 
         <!-- Desktop Logo  -->
-        <img src="./assets/images/logo-large.svg" alt="Typing Speed Test" class="hidden lg:block h-10">
+        <img src="./assets/images/logo-large.svg" alt="Typing Speed Test" class="hidden sm:block h-10">
 
         <!-- Mobile Logo  -->
-        <div class="flex items-center gap-3 lg:hidden">
+        <div class="flex items-center gap-3 sm:hidden">
           <img src="./assets/images/logo-small.svg" alt="Typing Speed Test" class="h-8">
-
+          <!-- 
           <div>
             <h1 class="text-lg font-semibold leading-tight">Typing Speed Test</h1>
             <p class="text-sm text-[var(--neutral-400)]">Type as fast as you can in 60 seconds</p>
-          </div>
+          </div> -->
         </div>
 
       </div>
@@ -60,69 +60,149 @@
   </header>
 
   <!-- ========== STATS BAR ========== -->
-  <div class="border-b border-[var(--neutral-800)] max-w-6xl mx-auto ">
-    <div class="max-w-6xl mx-auto  py-4 flex flex-wrap items-center justify-between gap-4">
+  <div class=" max-w-6xl mx-auto px-4 xl:px-0 ">
+    <div
+      class="max-w-6xl mx-auto  py-4 flex flex-wrap items-center justify-between gap-4 border-b border-[var(--neutral-800)]">
 
       <!-- Left Stats -->
-      <div class="flex items-center gap-6 text-sm">
-        <div>
+      <div class="flex items-center gap-6 text-md w-full sm:w-fit ">
+        <div class="flex flex-col gap-1 sm:flex-row w-full  justify-center items-center ">
           <span class="text-[var(--neutral-400)]">WPM: </span>
           <span class="font-semibold" id="wpm">0</span>
         </div>
-        <div>
+        <div class="flex flex-col gap-1 sm:flex-row  w-full justify-center items-center">
           <span class="text-[var(--neutral-400)]">Accuracy: </span>
           <span class="font-semibold text-[var(--red-500)]" id="accuracy">100%</span>
         </div>
-        <div>
+        <div class="flex flex-col gap-1 sm:flex-row w-full  justify-center items-center">
           <span class="text-[var(--neutral-400)]">Time: </span>
           <span class="font-semibold text-[var(--yellow-400)]" id="timer">0:60</span>
         </div>
       </div>
 
+
       <!-- Right Controls -->
-      <div class="flex items-center gap-6 text-sm">
-        <!-- Difficulty -->
-        <div class="flex items-center gap-2">
-          <span class="text-[var(--neutral-400)]">Difficulty:</span>
-          <div class="flex gap-1">
-            <button
-              class="cursor-pointer difficulty-btn px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] transition"
-              data-difficulty="easy">Easy</button>
-            <button
-              class="cursor-pointer difficulty-btn px-3 py-1 rounded-lg border border-[var(--blue-500)] text-[var(--blue-400)] hover:border-[var(--blue-400)] transition"
-              data-difficulty="medium">Medium</button>
-            <button
-              class="cursor-pointer difficulty-btn px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] transition"
-              data-difficulty="hard">Hard</button>
+      <div class="w-full sm:w-auto text-sm">
+
+        <!-- MOBILE DROPDOWNS -->
+        <div class="grid grid-cols-2 gap-3 sm:hidden">
+
+          <!-- Mobile Difficulty Dropdown -->
+          <div class="relative" id="mobile-difficulty-dropdown">
+            <button type="button" id="mobile-difficulty-btn"
+              class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-[var(--neutral-500)] bg-[var(--neutral-900)] text-[var(--neutral-0)] font-medium">
+              <span id="mobile-difficulty-label">Medium</span>
+              <svg class="w-4 h-4 text-[var(--neutral-400)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="mobile-difficulty-menu"
+              class="hidden absolute left-0 mt-2 w-full bg-[var(--neutral-800)]  rounded-lg shadow-xl z-30 divide-y divide-[var(--neutral-800)] overflow-hidden">
+              <button type="button"
+                class="mobile-diff-option w-full border-b-1 border-[var(--neutral-500)] px-3 py-2.5 flex items-center gap-2.5 text-left hover:bg-[var(--neutral-500)]"
+                data-difficulty="easy">
+                <span
+                  class="radio-circle w-4 h-4 rounded-full border-2 border-[var(--neutral-400)] flex items-center justify-center"></span>
+                <span>Easy</span>
+              </button>
+              <button type="button"
+                class="mobile-diff-option w-full px-3 py-2.5 flex items-center gap-2.5 text-left hover:bg-[var(--neutral-500)] border-b-1 border-[var(--neutral-500)]"
+                data-difficulty="medium">
+                <span
+                  class="radio-circle w-4 h-4 rounded-full border-4 border-[var(--blue-400)] bg-[var(--neutral-800)] flex items-center justify-center"></span>
+                <span>Medium</span>
+              </button>
+              <button type="button"
+                class="mobile-diff-option w-full px-3 py-2.5 flex items-center gap-2.5 text-left hover:bg-[var(--neutral-500)]"
+                data-difficulty="hard">
+                <span
+                  class="radio-circle w-4 h-4 rounded-full border-2 border-[var(--neutral-400)] flex items-center justify-center"></span>
+                <span>Hard</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mobile Mode Dropdown -->
+          <div class="relative" id="mobile-mode-dropdown">
+            <button type="button" id="mobile-mode-btn"
+              class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg border border-[var(--neutral-500)] bg-[var(--neutral-900)] text-[var(--neutral-0)] font-medium">
+              <span id="mobile-mode-label">Timed (60s)</span>
+              <svg class="w-4 h-4 text-[var(--neutral-400)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div id="mobile-mode-menu"
+              class="hidden absolute right-0 mt-2 w-full bg-[var(--neutral-800)]  rounded-lg shadow-xl z-30 divide-y divide-[var(--neutral-700)] overflow-hidden">
+              <button type="button"
+                class="mobile-mode-option w-full px-3 py-2.5 flex items-center gap-2.5 text-left border-b-1 border-[var(--neutral-500)] hover:bg-[var(--neutral-700)]"
+                data-mode="timed">
+                <span
+                  class="radio-circle w-4 h-4 rounded-full border-4 border-[var(--blue-400)] bg-[var(--neutral-800)] flex items-center justify-center"></span>
+                <span>Timed (60s)</span>
+              </button>
+              <button type="button"
+                class="mobile-mode-option w-full px-3 py-2.5 flex items-center gap-2.5 text-left hover:bg-[var(--neutral-700)]"
+                data-mode="passage">
+                <span
+                  class="radio-circle w-4 h-4 rounded-full border-2 border-[var(--neutral-400)] flex items-center justify-center"></span>
+                <span>Passage</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- DESKTOP BUTTONS (Sirf tablet/desktop par dikhega: hidden sm:flex) -->
+        <div class="hidden sm:flex items-center gap-6">
+          <!-- Difficulty -->
+          <div class="flex items-center gap-2">
+            <span class="text-[var(--neutral-400)]">Difficulty:</span>
+            <div class="flex gap-1">
+              <button
+                class="cursor-pointer difficulty-btn px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] transition"
+                data-difficulty="easy">Easy</button>
+              <button
+                class="cursor-pointer difficulty-btn px-3 py-1 rounded-lg border border-[var(--blue-500)] text-[var(--blue-400)] hover:border-[var(--blue-400)] transition"
+                data-difficulty="medium">Medium</button>
+              <button
+                class="cursor-pointer difficulty-btn px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] transition"
+                data-difficulty="hard">Hard</button>
+            </div>
+          </div>
+
+          <!-- Mode -->
+          <div class="flex items-center gap-2">
+            <span class="text-[var(--neutral-400)]">Mode:</span>
+            <div class="flex gap-1">
+              <button
+                class="mode-btn cursor-pointer px-3 py-1 rounded-lg border border-[var(--blue-500)] text-[var(--blue-400)] hover:border-[var(--blue-400)] transition"
+                data-mode="timed">Timed (60s)</button>
+              <button
+                class="mode-btn cursor-pointer px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] hover:text-[var(--blue-400)] transition"
+                data-mode="passage">Passage</button>
+            </div>
           </div>
         </div>
 
-        <!-- Mode -->
-        <div class="flex items-center gap-2">
-          <span class="text-[var(--neutral-400)]">Mode:</span>
-          <div class="flex gap-1">
-            <button class=" mode-btn cursor-pointer px-3 py-1 rounded-lg border border-[var(--blue-500)] text-[var(--blue-400)] hover:border-[var(--blue-400)] transition"
-              data-mode="timed">Timed (60s)</button>
-            <button
-              class=" mode-btn cursor-pointer px-3 py-1 rounded-lg border border-[var(--neutral-500)] text-[var(--neutral-400)] hover:border-[var(--blue-400)] hover:text-[var(--blue-400)] transition"
-              data-mode="passage">Passage</button>
-          </div>
-        </div>
       </div>
     </div>
   </div>
 
   <!-- ========== MAIN CONTENT ========== -->
-  <main class="max-w-6xl mx-auto  py-16 relative min-h-[400px]">
+  <main class="max-w-6xl mx-auto  py-16 relative min-h-[400px] px-4 xl:px-0">
 
     <!-- Typing Text Area -->
     <div id="text-display"
       class="text-2xl leading-relaxed text-[var(--neutral-400)] select-none max-w-6xl mx-auto blurred">
       <!-- Text will be inserted here by JavaScript -->
-      
+
     </div>
-    
-     <div id="cursor"></div>
+
+    <div id="cursor"></div>
 
     <!-- Start Overlay -->
     <div id="start-overlay" class="absolute inset-0 flex flex-col items-center justify-center">
@@ -130,8 +210,7 @@
         class="px-8 py-3 bg-[var(--blue-600)] hover:bg-[var(--blue-400)] text-white font-semibold rounded-xl transition cursor-pointer">
         Start Typing Test
       </button>
-      <p id="click-to-start"
-        class="  mt-4 text-[var(--neutral-400)] text-sm">Or click the text and start typing</p>
+      <p id="click-to-start" class="  mt-4 text-[var(--neutral-400)] text-sm">Or click the text and start typing</p>
     </div>
   </main>
 
@@ -145,19 +224,19 @@
 
   <!-- ========== RESULTS SCREEN ========== -->
   <div id="results-screen"
-    class="hidden absolute top-0 inset-x-0 min-h-screen bg-[var(--neutral-900)] flex flex-col z-50 overflow-x-hidden">
+    class="hidden absolute top-0 inset-x-0 min-h-screen  bg-[var(--neutral-900)] flex flex-col z-50 overflow-x-hidden">
 
     <!-- Header inside Results Screen -->
-    <header class="border-b border-[var(--neutral-800)] w-full">
-      <div class="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+    <header class=" w-full">
+      <div class="max-w-6xl mx-auto px-4 xl:px-0 py-5 flex items-center justify-between">
         <div class="flex items-center gap-3">
           <img src="./assets/images/logo-large.svg" alt="Typing Speed Test" class="hidden lg:block h-10">
           <div class="flex items-center gap-3 lg:hidden">
             <img src="./assets/images/logo-small.svg" alt="Typing Speed Test" class="h-8">
-            <div>
+            <!-- <div>
               <h1 class="text-lg font-semibold leading-tight">Typing Speed Test</h1>
               <p class="text-sm text-[var(--neutral-400)]">Type as fast as you can in 60 seconds</p>
-            </div>
+            </div> -->
           </div>
         </div>
 
@@ -172,19 +251,33 @@
 
 
     <!-- Modal Content (Centered) -->
-    <div class="relative flex-1 flex flex-col items-center justify-center px-6 pt-12 pb-40 md:pb-56 min-h-[700px]">
+    <div class="relative flex-1 flex flex-col items-center justify-center px-4 pt-12 pb-40 md:pb-56 min-h-[700px]">
 
       <!-- Decorative Stars (First Test & Normal Test Complete ke liye) -->
       <img id="pattern-star-left" src="./assets/images/pattern-star-2.svg" alt=""
-        class="hidden md:block absolute top-24 left-12 w-6 h-6 pointer-events-none">
+        class=" absolute top-24 left-6 sm:left-12 w-6 h-6 pointer-events-none">
       <img id="pattern-star-right" src="./assets/images/pattern-star-1.svg" alt=""
-        class="hidden md:block absolute bottom-20 right-16 w-10 h-10 pointer-events-none">
+        class=" absolute bottom-20 right-8 sm:right-16 w-10 h-10 pointer-events-none">
 
       <!-- Decorative Confetti (High Score Smashed ke liye) -->
       <img id="pattern-confetti" src="./assets/images/pattern-confetti.svg" alt=""
         class="hidden absolute bottom-0 inset-x-0 w-full h-40 md:h-56 object-cover object-bottom pointer-events-none">
       <!-- Top Center Icon (Completed ya New PB) -->
-      <div id="result-icon" class="mb-6 z-10"></div>
+      <!-- Outer Container -->
+      <div class="relative flex items-center justify-center w-24 h-24 mb-6 z-10" id="result-icon">
+
+        <!-- Outer Ring (Sab se halka glow / bada circle) -->
+        <div class="absolute w-20 h-20 bg-green-500/10 rounded-full"></div>
+
+        <!-- Middle Ring (Thora dark glow) -->
+        <div class="absolute w-16 h-16 bg-green-500/20 rounded-full"></div>
+
+        <!-- Inner Ring (Solid background circle jisme icon hoga) -->
+        <div class="relative w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+          <img src="assets/images/icon-completed.svg" alt="">
+        </div>
+
+      </div>
 
       <!-- Heading & Subtitle -->
       <h2 id="result-title" class="text-3xl font-bold mb-2 z-10 text-center">Test Complete!</h2>
@@ -194,17 +287,17 @@
       <!-- Stats Grid Box (Purana code same rahega) -->
       <div class="flex flex-wrap justify-center gap-4 mb-8 z-10">
         <div class="flex flex-wrap justify-center gap-4 mb-8 z-10">
-          <div class="border border-[var(--neutral-800)] rounded-xl px-8 py-4 min-w-[160px]">
+          <div class="border border-[var(--neutral-800)] rounded-xl px-4 py-4 min-w-[160px] w-full sm:w-fit">
             <p class="text-sm text-[var(--neutral-400)] mb-1">WPM:</p>
             <p id="final-wpm" class="text-2xl font-bold">0</p>
           </div>
 
-          <div class="border border-[var(--neutral-800)] rounded-xl px-8 py-4 min-w-[160px]">
+          <div class="border border-[var(--neutral-800)] rounded-xl px-4 py-4 min-w-[160px] w-full sm:w-fit">
             <p class="text-sm text-[var(--neutral-400)] mb-1">Accuracy:</p>
             <p id="final-accuracy" class="text-2xl font-bold">100%</p>
           </div>
 
-          <div class="border border-[var(--neutral-800)] rounded-xl px-8 py-4 min-w-[160px]">
+          <div class="border border-[var(--neutral-800)] rounded-xl px-4 py-4 min-w-[160px] w-full sm:w-fit">
             <p class="text-sm text-[var(--neutral-400)] mb-1">Characters:</p>
             <p id="final-chars" class="text-2xl font-bold">0/0</p>
           </div>
@@ -217,16 +310,27 @@
         Go Again ↺
       </button>
     </div>
+    <footer
+      class="attribution  text-sm  py-6 text-center text-[var(--neutral-500)] max-w-6xl mx-auto px-4 xl:px-0 w-full">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" rel="noreferrer" target="_blank"
+        class="text-[var(--blue-400)] hover:text-[var(--green-500)]">Frontend
+        Mentor</a>.
+      Coded by <a href="https://syedusmanahmed.vercel.app/" target="_blank" rel="noreferrer"
+        class="text-[var(--blue-400)] hover:text-[var(--green-500)]">Syed Usman Ahmed</a>.
+    </footer>
   </div>
 
 
 
-  <footer class="attribution border-t border-[var(--neutral-800)] text-sm  py-6 text-center text-[var(--neutral-500)] max-w-6xl mx-auto ">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" rel="noreferrer" target="_blank"
-      class="text-[var(--blue-400)] hover:text-[var(--green-500)]">Frontend
-      Mentor</a>.
-    Coded by <a href="https://syedusmanahmed.vercel.app/" target="_blank" rel="noreferrer"
-      class="text-[var(--blue-400)] hover:text-[var(--green-500)]">Syed Usman Ahmed</a>.
+  <footer class="attribution  text-sm  py-6 text-center text-[var(--neutral-500)] max-w-6xl mx-auto px-4 xl:px-0 ">
+    <div class="border-t border-[var(--neutral-800)] items-center pt-3">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" rel="noreferrer" target="_blank"
+        class="text-[var(--blue-400)] hover:text-[var(--green-500)]">Frontend
+        Mentor</a>.
+      Coded by <a href="https://syedusmanahmed.vercel.app/" target="_blank" rel="noreferrer"
+        class="text-[var(--blue-400)] hover:text-[var(--green-500)]">Syed Usman Ahmed</a>.
+    </div>
+
   </footer>
 
   <script src="script.js"></script>
