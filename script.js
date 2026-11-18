@@ -34,6 +34,7 @@ const mobileModeLabel = document.getElementById('mobile-mode-label');
 const mobileModeOptions = document.querySelectorAll('.mobile-mode-option');
 
 const cursor = document.getElementById('cursor');
+const mobileInput = document.getElementById('mobile-input');
 
 
 let currentText = "";
@@ -145,6 +146,10 @@ function startTest() {
     isTestRunning = true;
     currentIndex = 0;
     updateCursorPosition();
+
+    if (mobileInput) {
+        mobileInput.focus();
+    }
 }
 
 let typingTimeout;
