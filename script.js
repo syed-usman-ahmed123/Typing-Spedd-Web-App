@@ -34,7 +34,7 @@ const mobileModeLabel = document.getElementById('mobile-mode-label');
 const mobileModeOptions = document.querySelectorAll('.mobile-mode-option');
 
 const cursor = document.getElementById('cursor');
-const mobileInput = document.getElementById('mobile-input');
+// const mobileInput = document.getElementById('mobile-input');
 
 
 let currentText = "";
@@ -147,9 +147,17 @@ function startTest() {
     currentIndex = 0;
     updateCursorPosition();
 
-    if (mobileInput) {
-        mobileInput.focus();
+    let hiddenInput = document.getElementById('hidden-typing-input');
+    if (!hiddenInput) {
+        hiddenInput = document.createElement('textarea');
+        hiddenInput.id = 'hidden-typing-input';
+        // Isko screen se bilkul bahar aur invisible kar diya hai taake design kharab na ho
+        hiddenInput.style.position = 'absolute';
+        hiddenInput.style.left = '-9999px';
+        hiddenInput.style.opacity = '0';
+        document.body.appendChild(hiddenInput);
     }
+    hiddenInput.focus();
 }
 
 let typingTimeout;
