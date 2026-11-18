@@ -61,7 +61,7 @@ function updateCursorPosition() {
     }
 }
 
-// Function ya initialization mein jahan personal best set hota hai:
+
 const currentBest = `${localStorage.getItem('typingPersonalBest') || 0} WPM`;
 personalBestElement.innerText = currentBest;
 
@@ -147,13 +147,13 @@ function startTest() {
     updateCursorPosition();
 }
 
-let typingTimeout; // keydown listener ke bahar (upar) likhein
+let typingTimeout;
 
 // Keyboard input sunne ke liye
 document.addEventListener('keydown', (e) => {
     if (!isTestRunning) return;
 
-    // Sirf typing keys (letters, space, backspace) par blink rokein
+
     if (e.key.length === 1 || e.key === 'Backspace') {
         document.body.classList.remove('idle');
         clearTimeout(typingTimeout);
@@ -172,21 +172,21 @@ document.addEventListener('keydown', (e) => {
         startTimer();
     }
 
-    // Backspace handle karne ke liye (optional abhi ke liye, pehle normal typing dekhte hain)
+
     if (e.key === 'Backspace') {
         if (currentIndex > 0) {
             const spanElements = textDisplay.querySelectorAll('.char');
 
-            // Current cursor ko piche hatayein
+
             spanElements[currentIndex].classList.remove('current');
             currentIndex--;
 
-            // Agar pichla character ghalat (incorrect) tha, to error count kam karein
+
             if (spanElements[currentIndex].classList.contains('incorrect')) {
                 errors--;
             }
 
-            // Character ka purana color (correct/incorrect) hata kar wapas current banayein
+
             spanElements[currentIndex].classList.remove('correct', 'incorrect');
             spanElements[currentIndex].classList.add('current');
 
@@ -197,18 +197,18 @@ document.addEventListener('keydown', (e) => {
     }
 
 
-    // Sirf single characters ko handle karein (jaise letters, spaces, punctuation)
+
     if (e.key.length === 1) {
         const spanElements = textDisplay.querySelectorAll('.char');
         const targetChar = currentText[currentIndex];
 
-        totalTyped++; // Total characters typed track karne ke liye
+        totalTyped++;
 
         if (e.key === targetChar) {
             spanElements[currentIndex].classList.add('correct');
         } else {
             spanElements[currentIndex].classList.add('incorrect');
-            errors++; // Ghalat key press hone par errors barhayein
+            errors++;
         }
 
         spanElements[currentIndex].classList.remove('current');
@@ -216,10 +216,10 @@ document.addEventListener('keydown', (e) => {
 
         if (currentIndex < spanElements.length) {
             spanElements[currentIndex].classList.add('current');
-            updateStats(); // Live WPM aur Accuracy update karein
+            updateStats();
             updateCursorPosition();
         } else {
-            endTest(); // Agar text khatam ho jaye
+            endTest();
         }
     }
 });
@@ -235,7 +235,7 @@ function startTimer() {
                 endTest();
             }
         } else {
-            // Passage Mode: Time upar count hoga (Stopwatch)
+            // Passage Mode:
             timer++;
             const mins = Math.floor(timer / 60);
             const secs = timer % 60;
@@ -245,7 +245,7 @@ function startTimer() {
 }
 
 function updateStats() {
-    // Timed mein (60 - timer), Passage mein direct 'timer' seconds guzre hain
+    // Timed mein (60 - timer), Passage  direct 'timer' 
     const secondsElapsed = currentMode === "timed" ? (60 - timer) : timer;
     const timeElapsed = secondsElapsed / 60;
 
@@ -264,31 +264,31 @@ function endTest() {
     timerInterval = null;
     updateStats();
 
-    // Final stats calculate karein
+    // Final stats calculate 
     const currentWpm = parseInt(wpmElement.innerText) || 0;
     const currentAcc = accuracyElement.innerText;
     const correctCount = currentIndex - errors;
 
-    // Results screen par values set karein
+    // Results screen values set 
     finalWpm.innerText = currentWpm;
     finalAccuracy.innerText = currentAcc;
 
-    // 1. Accuracy Color Logic (100% ho to green, warna red)
+    // 1. Accuracy Color Logic 
     if (currentAcc === "100%") {
         finalAccuracy.className = "text-2xl font-bold text-[var(--green-500)]";
     } else {
         finalAccuracy.className = "text-2xl font-bold text-[var(--red-500)]";
     }
 
-    // 2. Characters Color Logic (Correct green mein, Errors red mein)
+    // 2. Characters Color Logic 
     finalChars.innerHTML = `<span class="text-[var(--green-500)]">${correctCount}</span><span class="text-[var(--neutral-400)]">/</span><span class="text-[var(--red-500)]">${errors}</span>`;
 
-    // LocalStorage se Personal Best check karein
-    // LocalStorage se Personal Best check karein
+
+    // LocalStorage personal best check
     let personalBest = Number(localStorage.getItem('typingPersonalBest')) || 0;
 
     if (personalBest === 0) {
-        // 1) BASELINE (first test): stars dikhao
+        // 1) BASELINE (first test): 
         if (resultTitle) resultTitle.innerText = "Baseline Established!";
         if (resultSubtitle) resultSubtitle.innerText = "You've set the bar. Now the real challenge begins—time to beat it.";
         if (goAgainBtn) goAgainBtn.innerHTML = "Beat This Score ↺";
@@ -301,7 +301,7 @@ function endTest() {
         localStorage.setItem('typingPersonalBest', currentWpm);
 
     } else if (currentWpm > personalBest) {
-        // 2) HIGH SCORE: stars hide
+        // 2) HIGH SCORE: 
         resultTitle.innerText = "High Score Smashed!";
         resultSubtitle.innerText = "You're getting faster. That was incredible typing.";
         goAgainBtn.innerHTML = "Beat This Score ↺";
@@ -314,25 +314,26 @@ function endTest() {
         localStorage.setItem('typingPersonalBest', currentWpm);
 
     } else {
-        // 3) TEST COMPLETE: stars dikhao
+        // 3) TEST COMPLETE:
         resultTitle.innerText = "Test Complete!";
         resultSubtitle.innerText = "Solid run. Keep pushing to beat your high score.";
         goAgainBtn.innerHTML = "Go Again ↺";
 
-        if (resultIcon) resultIcon.innerHTML = `<div class="absolute w-20 h-20 bg-green-500/10 rounded-full"></div>
-    <div class="absolute w-16 h-16 bg-green-500/20 rounded-full"></div>
-    <div class="relative w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
-        <img src="./assets/images/${iconFileName}" alt="">
-    </div>`;
+        if (resultIcon) resultIcon.innerHTML = `
+            <div class="absolute w-20 h-20 bg-green-500/10 rounded-full"></div>
+            <div class="absolute w-16 h-16 bg-green-500/20 rounded-full"></div>
+            <div class="relative w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
+                <img src="./assets/images/icon-completed.svg" alt="Completed" class="w-12 h-12">
+            </div>`;
         if (patternStarLeft) patternStarLeft.style.display = '';
         if (patternStarRight) patternStarRight.style.display = '';
         if (patternConfetti) patternConfetti.classList.add('hidden');
     }
 
-    // Aakhir mein modal show karwayein:
+    // Modal show
     resultsScreen.classList.remove('hidden');
 
-    // Header ka personal best update karein
+    // Header ka personal best update 
     const updatedBest = `${localStorage.getItem('typingPersonalBest')} WPM`;
     personalBestElement.innerText = updatedBest;
     if (resultHeaderPb) {
@@ -340,13 +341,9 @@ function endTest() {
     }
     resultsScreen.classList.remove('hidden');
 
-
-
-
-
 }
 
-// Go Again button click par reset karein
+// Go Again button click  reset 
 goAgainBtn.addEventListener('click', () => {
     resultsScreen.classList.add('hidden');
     resetTest();
@@ -354,11 +351,11 @@ goAgainBtn.addEventListener('click', () => {
 
 function resetTest() {
     clearInterval(timerInterval);
-    clearTimeout(typingTimeout); // Purana typing timeout clear karein
+    clearTimeout(typingTimeout);
     timerInterval = null;
     isTestRunning = false;
 
-    document.body.classList.add('idle'); // Cursor ko wapas blink mode mein layein
+    document.body.classList.add('idle');
 
     if (currentMode === "timed") {
         timer = 60;
@@ -386,11 +383,11 @@ restartBtn.addEventListener('click', resetTest);
 
 
 startBtn.addEventListener('click', () => {
-    console.log("Button clicked successfully!"); // Console mein check karein ke yeh print ho raha hai ya nahi
+    // console.log("Button clicked successfully!"); 
     startTest();
 });
 
-// Poora overlay (button + "Or click the text..." + background) clickable bana dein:
+
 startOverlay.addEventListener('click', () => {
     if (!isTestRunning) {
         startTest();
@@ -398,7 +395,7 @@ startOverlay.addEventListener('click', () => {
 });
 
 
-// Page load hote hi ek random text load karwao aur blur rakho
+/// random text load
 currentText = getRandomText(currentDifficulty);
 renderText(currentText);
 textDisplay.classList.add("blurred");
@@ -408,17 +405,17 @@ const difficultyBtns = document.querySelectorAll('.difficulty-btn');
 
 difficultyBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        // 1. Sab buttons se active blue style hatayein aur original neutral style wapas lagayein
+
         difficultyBtns.forEach(b => {
             b.classList.remove('border-[var(--blue-500)]', 'text-[var(--blue-400)]');
             b.classList.add('border-[var(--neutral-500)]', 'text-[var(--neutral-400)]');
         });
 
-        // 2. Sirf clicked button se neutral hatayein aur active blue style lagayein
+
         btn.classList.remove('border-[var(--neutral-500)]', 'text-[var(--neutral-400)]');
         btn.classList.add('border-[var(--blue-500)]', 'text-[var(--blue-400)]');
 
-        // 3. Difficulty update karein aur test reset karein
+
         currentDifficulty = btn.getAttribute('data-difficulty');
         resetTest();
     });
@@ -428,17 +425,17 @@ const modeBtns = document.querySelectorAll('.mode-btn');
 
 modeBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        // 1. Sab buttons se active blue style hatayein
+
         modeBtns.forEach(b => {
             b.classList.remove('border-[var(--blue-500)]', 'text-[var(--blue-400)]');
             b.classList.add('border-[var(--neutral-500)]', 'text-[var(--neutral-400)]');
         });
 
-        // 2. Clicked button ko active blue style dein
+
         btn.classList.remove('border-[var(--neutral-500)]', 'text-[var(--neutral-400)]');
         btn.classList.add('border-[var(--blue-500)]', 'text-[var(--blue-400)]');
 
-        // 3. Mode update karein aur test reset karein
+
         currentMode = btn.getAttribute('data-mode');
         resetTest();
     });
@@ -458,14 +455,13 @@ mobileModeBtn.addEventListener('click', (e) => {
     mobileDiffMenu.classList.add('hidden');
 });
 
-// Bahar click karne par dropdowns band karein
+/// dropdown close when click out
 document.addEventListener('click', () => {
     mobileDiffMenu.classList.add('hidden');
     mobileModeMenu.classList.add('hidden');
 });
 
 // Difficulty Option Select
-// Difficulty Option Select ke andar:
 mobileDiffOptions.forEach(option => {
     option.addEventListener('click', () => {
         const selectedDiff = option.dataset.difficulty;
@@ -488,7 +484,7 @@ mobileDiffOptions.forEach(option => {
     });
 });
 
-// Mode Option Select ke andar:
+// Mode Option Select 
 mobileModeOptions.forEach(option => {
     option.addEventListener('click', () => {
         const selectedMode = option.dataset.mode;
@@ -511,6 +507,6 @@ mobileModeOptions.forEach(option => {
     });
 });
 
-// Page load hote hi cursor ko blinking state mein rakhein
+// cursor blink when page load
 document.body.classList.add('idle');
 updateCursorPosition();

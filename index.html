@@ -41,11 +41,7 @@
         <!-- Mobile Logo  -->
         <div class="flex items-center gap-3 sm:hidden">
           <img src="./assets/images/logo-small.svg" alt="Typing Speed Test" class="h-8">
-          <!-- 
-          <div>
-            <h1 class="text-lg font-semibold leading-tight">Typing Speed Test</h1>
-            <p class="text-sm text-[var(--neutral-400)]">Type as fast as you can in 60 seconds</p>
-          </div> -->
+        
         </div>
 
       </div>
@@ -156,7 +152,7 @@
 
         </div>
 
-        <!-- DESKTOP BUTTONS (Sirf tablet/desktop par dikhega: hidden sm:flex) -->
+        <!-- DESKTOP BUTTONS -->
         <div class="hidden sm:flex items-center gap-6">
           <!-- Difficulty -->
           <div class="flex items-center gap-2">
@@ -233,10 +229,7 @@
           <img src="./assets/images/logo-large.svg" alt="Typing Speed Test" class="hidden lg:block h-10">
           <div class="flex items-center gap-3 lg:hidden">
             <img src="./assets/images/logo-small.svg" alt="Typing Speed Test" class="h-8">
-            <!-- <div>
-              <h1 class="text-lg font-semibold leading-tight">Typing Speed Test</h1>
-              <p class="text-sm text-[var(--neutral-400)]">Type as fast as you can in 60 seconds</p>
-            </div> -->
+           
           </div>
         </div>
 
@@ -253,26 +246,26 @@
     <!-- Modal Content (Centered) -->
     <div class="relative flex-1 flex flex-col items-center justify-center px-4 pt-12 pb-40 md:pb-56 min-h-[700px]">
 
-      <!-- Decorative Stars (First Test & Normal Test Complete ke liye) -->
+      <!-- Decorative Stars  -->
       <img id="pattern-star-left" src="./assets/images/pattern-star-2.svg" alt=""
         class=" absolute top-24 left-6 sm:left-12 w-6 h-6 pointer-events-none">
       <img id="pattern-star-right" src="./assets/images/pattern-star-1.svg" alt=""
         class=" absolute bottom-20 right-8 sm:right-16 w-10 h-10 pointer-events-none">
 
-      <!-- Decorative Confetti (High Score Smashed ke liye) -->
+      <!-- Decorative Confetti  -->
       <img id="pattern-confetti" src="./assets/images/pattern-confetti.svg" alt=""
         class="hidden absolute bottom-0 inset-x-0 w-full h-40 md:h-56 object-cover object-bottom pointer-events-none">
       <!-- Top Center Icon (Completed ya New PB) -->
       <!-- Outer Container -->
       <div class="relative flex items-center justify-center w-24 h-24 mb-6 z-10" id="result-icon">
 
-        <!-- Outer Ring (Sab se halka glow / bada circle) -->
+        <!-- Outer Ring  -->
         <div class="absolute w-20 h-20 bg-green-500/10 rounded-full"></div>
 
-        <!-- Middle Ring (Thora dark glow) -->
+        <!-- Middle Ring  -->
         <div class="absolute w-16 h-16 bg-green-500/20 rounded-full"></div>
 
-        <!-- Inner Ring (Solid background circle jisme icon hoga) -->
+        <!-- Inner Ring  -->
         <div class="relative w-12 h-12 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
           <img src="assets/images/icon-completed.svg" alt="">
         </div>
@@ -284,7 +277,7 @@
       <p id="result-subtitle" class="text-[var(--neutral-400)] text-sm mb-8 z-10 text-center max-w-md">Solid run. Keep
         pushing to beat your high score.</p>
 
-      <!-- Stats Grid Box (Purana code same rahega) -->
+      <!-- Stats Grid Box  -->
       <div class="flex flex-wrap justify-center gap-4 mb-8 z-10">
         <div class="flex flex-wrap justify-center gap-4 mb-8 z-10">
           <div class="border border-[var(--neutral-800)] rounded-xl px-4 py-4 min-w-[160px] w-full sm:w-fit">
@@ -304,7 +297,7 @@
         </div>
       </div>
 
-      <!-- Button (Purana code same rahega) -->
+      <!-- Button  -->
       <button id="go-again-btn"
         class="z-10 cursor-pointer px-6 py-3 bg-[var(--neutral-0)] hover:bg-[var(--neutral-400)] text-[var(--neutral-900)] font-semibold rounded-xl transition flex items-center gap-2">
         Go Again ↺
