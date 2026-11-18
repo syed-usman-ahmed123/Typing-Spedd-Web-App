@@ -34,7 +34,7 @@ const mobileModeLabel = document.getElementById('mobile-mode-label');
 const mobileModeOptions = document.querySelectorAll('.mobile-mode-option');
 
 const cursor = document.getElementById('cursor');
-// const mobileInput = document.getElementById('mobile-input');
+
 
 
 let currentText = "";
@@ -147,93 +147,217 @@ function startTest() {
     currentIndex = 0;
     updateCursorPosition();
 
-    let hiddenInput = document.getElementById('hidden-typing-input');
-    if (!hiddenInput) {
-        hiddenInput = document.createElement('textarea');
-        hiddenInput.id = 'hidden-typing-input';
-        // Isko screen se bilkul bahar aur invisible kar diya hai taake design kharab na ho
-        hiddenInput.style.position = 'absolute';
-        hiddenInput.style.left = '-9999px';
-        hiddenInput.style.opacity = '0';
-        document.body.appendChild(hiddenInput);
-    }
-    hiddenInput.focus();
+    resetMobileInput();
+    mobileInput.focus({ preventScroll: true });
+
+
 }
+
+// let typingTimeout;
+
+
+// document.addEventListener('keydown', (e) => {
+//     if (!isTestRunning) return;
+
+
+//     if (e.key.length === 1 || e.key === 'Backspace') {
+//         document.body.classList.remove('idle');
+//         clearTimeout(typingTimeout);
+//         typingTimeout = setTimeout(() => {
+//             document.body.classList.add('idle');
+
+//         }, 500);
+//     }
+// Space se page scroll na ho
+// if (e.key === ' ' || e.code === 'Space') {
+//     e.preventDefault();
+// }
+
+// Agar timer pehli baar chal raha hai, to countdown shuru karo
+// if (!timerInterval) {
+//     startTimer();
+// }
+
+
+//     if (e.key === 'Backspace') {
+//         if (currentIndex > 0) {
+//             const spanElements = textDisplay.querySelectorAll('.char');
+
+
+//             spanElements[currentIndex].classList.remove('current');
+//             currentIndex--;
+
+
+//             if (spanElements[currentIndex].classList.contains('incorrect')) {
+//                 errors--;
+//             }
+
+
+//             spanElements[currentIndex].classList.remove('correct', 'incorrect');
+//             spanElements[currentIndex].classList.add('current');
+
+//             updateStats();
+//             updateCursorPosition();
+//         }
+//         return;
+//     }
+
+
+
+//     if (e.key.length === 1) {
+//         const spanElements = textDisplay.querySelectorAll('.char');
+//         const targetChar = currentText[currentIndex];
+
+//         totalTyped++;
+
+//         if (e.key === targetChar) {
+//             spanElements[currentIndex].classList.add('correct');
+//         } else {
+//             spanElements[currentIndex].classList.add('incorrect');
+//             errors++;
+//         }
+
+//         spanElements[currentIndex].classList.remove('current');
+//         currentIndex++;
+
+//         if (currentIndex < spanElements.length) {
+//             spanElements[currentIndex].classList.add('current');
+//             updateStats();
+//             updateCursorPosition();
+//         } else {
+//             endTest();
+//         }
+//     }
+// });
+
 
 let typingTimeout;
 
-// Keyboard input sunne ke liye
+const mobileInput = document.getElementById('mobile-input');
+
+// Mobile Backspace pakadne ke liye input me ek sentinel (space) rakhte hain.
+// Agar value sentinel se chhoti ho jaye, matlab user ne Backspace dabaya.
+const SENTINEL = ' ';
+
+function resetMobileInput() {
+    mobileInput.value = SENTINEL;
+    mobileInput.setSelectionRange(SENTINEL.length, SENTINEL.length);
+}
+
+function showTypingActivity() {
+    document.body.classList.remove('idle');
+    clearTimeout(typingTimeout);
+    typingTimeout = setTimeout(() => {
+        document.body.classList.add('idle');
+    }, 500);
+}
+
+function handleBackspace() {
+    if (!isTestRunning) return;
+    showTypingActivity();
+
+    if (!timerInterval) {
+        startTimer();
+    }
+
+    if (currentIndex > 0) {
+        const spanElements = textDisplay.querySelectorAll('.char');
+
+        spanElements[currentIndex].classList.remove('current');
+        currentIndex--;
+
+        if (spanElements[currentIndex].classList.contains('incorrect')) {
+            errors--;
+        }
+
+        spanElements[currentIndex].classList.remove('correct', 'incorrect');
+        spanElements[currentIndex].classList.add('current');
+
+        updateStats();
+        updateCursorPosition();
+    }
+}
+
+function handleChar(char) {
+    if (!isTestRunning) return;
+    showTypingActivity();
+
+    if (!timerInterval) {
+        startTimer();
+    }
+
+    const spanElements = textDisplay.querySelectorAll('.char');
+    const targetChar = currentText[currentIndex];
+
+    totalTyped++;
+
+    if (char === targetChar) {
+        spanElements[currentIndex].classList.add('correct');
+    } else {
+        spanElements[currentIndex].classList.add('incorrect');
+        errors++;
+    }
+
+    spanElements[currentIndex].classList.remove('current');
+    currentIndex++;
+
+    if (currentIndex < spanElements.length) {
+        spanElements[currentIndex].classList.add('current');
+        updateStats();
+        updateCursorPosition();
+    } else {
+        endTest();
+    }
+}
+
+// DESKTOP: physical keyboard
 document.addEventListener('keydown', (e) => {
     if (!isTestRunning) return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
 
-
-    if (e.key.length === 1 || e.key === 'Backspace') {
-        document.body.classList.remove('idle');
-        clearTimeout(typingTimeout);
-        typingTimeout = setTimeout(() => {
-            document.body.classList.add('idle');
-
-        }, 500);
-    }
     // Space se page scroll na ho
     if (e.key === ' ' || e.code === 'Space') {
         e.preventDefault();
     }
 
-    // Agar timer pehli baar chal raha hai, to countdown shuru karo
-    if (!timerInterval) {
-        startTimer();
-    }
-
-
     if (e.key === 'Backspace') {
-        if (currentIndex > 0) {
-            const spanElements = textDisplay.querySelectorAll('.char');
-
-
-            spanElements[currentIndex].classList.remove('current');
-            currentIndex--;
-
-
-            if (spanElements[currentIndex].classList.contains('incorrect')) {
-                errors--;
-            }
-
-
-            spanElements[currentIndex].classList.remove('correct', 'incorrect');
-            spanElements[currentIndex].classList.add('current');
-
-            updateStats();
-            updateCursorPosition();
-        }
+        e.preventDefault();
+        handleBackspace();
         return;
     }
 
-
-
     if (e.key.length === 1) {
-        const spanElements = textDisplay.querySelectorAll('.char');
-        const targetChar = currentText[currentIndex];
+        e.preventDefault(); // input me char na jaye, warna mobile listener dobara count karega
+        handleChar(e.key);
+    }
+});
 
-        totalTyped++;
+// MOBILE: virtual keyboard
+mobileInput.addEventListener('input', () => {
+    if (!isTestRunning) {
+        resetMobileInput();
+        return;
+    }
 
-        if (e.key === targetChar) {
-            spanElements[currentIndex].classList.add('correct');
-        } else {
-            spanElements[currentIndex].classList.add('incorrect');
-            errors++;
+    const value = mobileInput.value;
+
+    if (value.length < SENTINEL.length) {
+        handleBackspace();
+    } else {
+        const typed = value.slice(SENTINEL.length);
+        for (const ch of typed) {
+            if (!isTestRunning) break;
+            handleChar(ch);
         }
+    }
 
-        spanElements[currentIndex].classList.remove('current');
-        currentIndex++;
+    resetMobileInput();
+});
 
-        if (currentIndex < spanElements.length) {
-            spanElements[currentIndex].classList.add('current');
-            updateStats();
-            updateCursorPosition();
-        } else {
-            endTest();
-        }
+// Text area par tap karne se keyboard dobara khul jaye
+document.querySelector('main').addEventListener('click', () => {
+    if (isTestRunning) {
+        mobileInput.focus({ preventScroll: true });
     }
 });
 
@@ -273,6 +397,7 @@ function updateStats() {
 function endTest() {
     if (!isTestRunning) return;
     isTestRunning = false;
+     mobileInput.blur();
     clearInterval(timerInterval);
     timerInterval = null;
     updateStats();
@@ -367,6 +492,7 @@ function resetTest() {
     clearTimeout(typingTimeout);
     timerInterval = null;
     isTestRunning = false;
+     mobileInput.blur();
 
     document.body.classList.add('idle');
 
@@ -380,7 +506,7 @@ function resetTest() {
     totalTyped = 0;
     errors = 0;
     currentIndex = 0;
-    timerElement.innerText = "1:00";
+    // timerElement.innerText = "1:00";
     wpmElement.innerText = "0";
     accuracyElement.innerText = "100%";
 
